@@ -1,4 +1,4 @@
-<h1 align="center">daricum</h1>
+<h1 align="center">dauricum</h1>
 
 ![Commits](https://img.shields.io/github/commit-activity/m/Maxdsdsdsd/dauricum)
 ![Stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
