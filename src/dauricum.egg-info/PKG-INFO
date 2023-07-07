@@ -1,3 +1,16 @@
+Metadata-Version: 2.1
+Name: dauricum
+Version: 0.2
+Summary: Python 3.10+ obfuscator with many obfuscation methods.
+Author-email: nighty1337 <mg938436@gmail.com>
+Project-URL: Homepage, https://github.com/Maxdsdsdsd/dauricum
+Project-URL: Bug Tracker, https://github.com/Maxdsdsdsd/dauricum/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Microsoft :: Windows
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
 <h1 align="center">daricum</h1>
 
 ![Commits](https://img.shields.io/github/commit-activity/m/Maxdsdsdsd/dauricum)

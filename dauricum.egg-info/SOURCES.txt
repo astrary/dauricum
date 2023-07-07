@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+setup.py
+src
+dauricum.egg-info/PKG-INFO
+dauricum.egg-info/SOURCES.txt
+dauricum.egg-info/dependency_links.txt
+dauricum.egg-info/top_level.txt
