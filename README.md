@@ -43,9 +43,9 @@ Obfuscate .py file
 
 ```bash
   py -m dauricum -input example1-unobf.py -output a.py --mba-expression
-  --mba-expression-mode true --in-outline
-  --control-flow --try-catch --try-catch-mode true
-  --try-catch-iter 3 --try-normalizer --try-normalizer-iter 5
+  --mba-expression-mode true --in-outline --control-flow --try-catch
+  --try-catch-mode true --try-catch-iter 3 --try-normalizer
+  --try-normalizer-iter 5 --rename --rename-mode 3 --opaque --opaque-iter 5
 ```
 
 Get help
