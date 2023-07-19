@@ -15,6 +15,8 @@
  * Control Flow
  * Try Catch
  * Try Catch Normalizer
+ * Opaque
+ * Renamer (Classes, fields, functions)
 
 ## Examples
 Check out examples folder
