@@ -79,6 +79,19 @@ class Person:
     def show_pets(self):
         for pet in self.pets:
             print(pet.name, pet.color, pet.__class__.__name__)
+    
+    class Cake:
+        def __init__(self):
+            pass
+
+class Dik(Person.Cake):
+    test = 228
+    
+    def __init__(self):
+        pass
+
+a = Dik.test
+print(a)
 
 my_dog = Dog("Fido", "brown", "Golden Retriever")
 my_cat = Cat("Whiskers", "gray")
@@ -132,6 +145,10 @@ j = i + x - z + 133
 print(j)
 print(i)
 def x():
+    my_person.add_pet(my_dog)
+    my_person.add_pet(my_cat)
+    my_person.show_pets()
+
     string = "abcdefghijklmnop"
     return string
 x()
