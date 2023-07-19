@@ -6,7 +6,7 @@ Python 3.10+ obfuscator with many obfuscation methods.
 
 """
 
-__version__ = "0.2"
+__version__ = "0.3"
 __author__ = 'nighty1337'
 __credits__ = 'POP_JUMP_FORWARD_IF_FALSE'
 
@@ -19,6 +19,8 @@ from dauricum.transformers import MemoryTransformer
 from dauricum.transformers import InOutlineTransformer
 from dauricum.transformers import ControlFlowTransformer
 from dauricum.transformers import MBAExprTransformer
+from dauricum.transformers import OpaqueTransformer
+from dauricum.transformers import RenamerTransformer
 from dauricum.logger import Logger
 
 class ObfuscatorSettings():
@@ -73,6 +75,20 @@ class ObfuscatorSettings():
         
         """
         self.addTransformer(TryNormalizerTransformer.TryNormalizierTransformer(iterations))
+    def Opaque(self, iterations: int):
+        """ 
+        
+        Opaque Transformer
+        
+        """
+        self.addTransformer(OpaqueTransformer.OpaqueTransformer(iterations))
+    def Renamer(self, mode: int):
+        """ 
+        
+        Renamer Transformer
+        
+        """
+        self.addTransformer(RenamerTransformer.RenamerTransformer(mode))
 
 class Obfuscator:
     def obfuscate(input_file: TextIOWrapper, out_file: TextIOWrapper, settings: ObfuscatorSettings):
@@ -85,14 +101,8 @@ class Obfuscator:
         
         for transformer in settings.transformers:
             transformer.setTree(tree)
+            Logger.logger.name = transformer.__class__.__name__
             
             tree = transformer.proceed()
-        
-        # tree = MBAExprTransformer.MBAExprTransformer(tree, True).proceed()
-        # tree = InOutlineTransformer.InOutlineTransformer(tree).proceed()
-        # tree = ControlFlowTransformer.ControlFlowTransformer(tree).proceed()
-        # tree = TryCatchTransformer.TryCatchTransformer(tree, True, 3).proceed() # Default - 1; Medium - 3; Hard - 5
-        # tree = TryNormalizerTransformer.TryNormalizierTransformer(tree, 5).proceed() # Default - 5
-        #tree = MemoryTransformer.MemoryTransformer(tree).proceed() # Unused currently
         
         out_file.write(ast.unparse(tree))

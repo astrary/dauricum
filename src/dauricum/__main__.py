@@ -74,6 +74,28 @@ def handle_args():
         default=1,
         help="Count of ... in one try-catch block"
     )
+    parser.add_argument(
+        "--opaque",
+        action='store_true',
+        help="Enables Opaque Tranformer"
+    )
+    parser.add_argument(
+        "--opaque-iter",
+        type=int,
+        default=1,
+        help="Count of iterations"
+    )
+    parser.add_argument(
+        "--rename",
+        action='store_true',
+        help="Enables Renamer Tranformer"
+    )
+    parser.add_argument(
+        "--rename-mode",
+        type=int,
+        default=0,
+        help="Change Renamer mode (0 - random sequence of 32 characters, 1 - random misleading word, 2 - random sequence of 64 characters, 3 - random word of misleading characters)"
+    )
     
     args = parser.parse_args()
     return args
@@ -84,7 +106,7 @@ def main():
     if (args.input == None or args.output == None):
         raise ValueError("Input or Output file is not specified!")
     
-    input, output = open(args.input, "r"), open(args.output, "w")
+    input, output = open(args.input, "r", encoding="utf-8"), open(args.output, "w", encoding="utf-8")
     
     settings = ObfuscatorSettings()
     settings.setLoggerEnabled(args.logging)
@@ -92,8 +114,14 @@ def main():
     if (args.mba_expression):
         settings.MBAExpression(args.mba_expression_mode)
         
+    if (args.rename):
+        settings.Renamer(args.rename_mode)
+        
     if (args.in_outline):
         settings.InOutline()
+    
+    if (args.opaque):
+        settings.Opaque(args.opaque_iter)
         
     if (args.control_flow):
         settings.ControlFlow()
