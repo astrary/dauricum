@@ -17,6 +17,7 @@
  * Try Catch Normalizer
  * Opaque
  * Renamer (Classes, fields, functions)
+ * String Obscure
 
 ## Examples
 Check out examples folder
@@ -44,10 +45,10 @@ Install from github
 Obfuscate .py file
 
 ```bash
-  py -m dauricum -input example1-unobf.py -output a.py --mba-expression
-  --mba-expression-mode true --in-outline --control-flow --try-catch
-  --try-catch-mode true --try-catch-iter 3 --try-normalizer
-  --try-normalizer-iter 5 --rename --rename-mode 3 --opaque --opaque-iter 5
+  py -m dauricum -input example1-unobf.py -output example1-obf-0.4.py --mba-expression
+  --mba-expression-mode true --in-outline --control-flow --try-catch --try-catch-mode true
+  --try-catch-iter 3 --try-normalizer --try-normalizer-iter 5 --rename --rename-mode 3
+  --opaque --opaque-iter 5 --string-obscure
 ```
 
 Get help
