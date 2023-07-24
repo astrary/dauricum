@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dauricum
-Version: 0.2
+Version: 0.4
 Summary: Python 3.10+ obfuscator with many obfuscation methods.
 Author-email: nighty1337 <mg938436@gmail.com>
 Project-URL: Homepage, https://github.com/Maxdsdsdsd/dauricum
@@ -11,7 +11,7 @@ Classifier: Operating System :: Microsoft :: Windows
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 
-<h1 align="center">daricum</h1>
+<h1 align="center">dauricum</h1>
 
 ![Commits](https://img.shields.io/github/commit-activity/m/Maxdsdsdsd/dauricum)
 ![Stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
@@ -28,6 +28,9 @@ Description-Content-Type: text/markdown
  * Control Flow
  * Try Catch
  * Try Catch Normalizer
+ * Opaque
+ * Renamer (Classes, fields, functions)
+ * String Obscure
 
 ## Examples
 Check out examples folder
@@ -55,10 +58,10 @@ Install from github
 Obfuscate .py file
 
 ```bash
-  py -m dauricum -input example1-unobf.py -output a.py --mba-expression
-  --mba-expression-mode true --in-outline
-  --control-flow --try-catch --try-catch-mode true
-  --try-catch-iter 3 --try-normalizer --try-normalizer-iter 5
+  py -m dauricum -input example1-unobf.py -output example1-obf-0.4.py --mba-expression
+  --mba-expression-mode true --in-outline --control-flow --try-catch --try-catch-mode true
+  --try-catch-iter 3 --try-normalizer --try-normalizer-iter 5 --rename --rename-mode 3
+  --opaque --opaque-iter 5 --string-obscure
 ```
 
 Get help

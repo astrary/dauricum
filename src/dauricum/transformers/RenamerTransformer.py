@@ -156,8 +156,8 @@ class RenamerTransformer:
         newTree = RenamerTransformer.RenamerTransformer().visit(self.tree)
         ast.fix_missing_locations(newTree)
         
-        newTree = RenamerTransformer.FieldRenamerTransformer().visit(newTree)
-        ast.fix_missing_locations(newTree)
+        # newTree = RenamerTransformer.FieldRenamerTransformer().visit(newTree)
+        # ast.fix_missing_locations(newTree)
         newTree = RenamerTransformer.FunctionRenamerTranformer().visit(newTree)
         ast.fix_missing_locations(newTree)
         newTree = RenamerTransformer.PreClassRenamerTransformer().visit(newTree)
@@ -199,7 +199,7 @@ class RenamerTransformer:
                     }
                 )
                 
-                node.targets[node.targets.index(target)].id = generated_name
+                # node.targets[node.targets.index(target)].id = generated_name
                 
                 RenamerTransformer.proceeded_fields += 1
             

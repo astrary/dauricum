@@ -82,6 +82,8 @@ class InOutlineTransformer:
         def visit_Call(self, node : ast.Call):
             if (isinstance(node.func, ast.Attribute)):
                 return node
+            if (isinstance(node.func, ast.Lambda)):
+                return node
             
             if (not node.func.id in default_names):
                 return node

@@ -6,7 +6,7 @@ Python 3.10+ obfuscator with many obfuscation methods.
 
 """
 
-__version__ = "0.3"
+__version__ = "0.4"
 __author__ = 'nighty1337'
 __credits__ = 'POP_JUMP_FORWARD_IF_FALSE'
 
@@ -21,6 +21,7 @@ from dauricum.transformers import ControlFlowTransformer
 from dauricum.transformers import MBAExprTransformer
 from dauricum.transformers import OpaqueTransformer
 from dauricum.transformers import RenamerTransformer
+from dauricum.transformers import StringTransformer
 from dauricum.logger import Logger
 
 class ObfuscatorSettings():
@@ -89,6 +90,13 @@ class ObfuscatorSettings():
         
         """
         self.addTransformer(RenamerTransformer.RenamerTransformer(mode))
+    def ObscureString(self):
+        """ 
+        
+        Renamer Transformer
+        
+        """
+        self.addTransformer(StringTransformer.StringTransformer())
 
 class Obfuscator:
     def obfuscate(input_file: TextIOWrapper, out_file: TextIOWrapper, settings: ObfuscatorSettings):

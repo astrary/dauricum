@@ -96,6 +96,11 @@ def handle_args():
         default=0,
         help="Change Renamer mode (0 - random sequence of 32 characters, 1 - random misleading word, 2 - random sequence of 64 characters, 3 - random word of misleading characters)"
     )
+    parser.add_argument(
+        "--string-obscure",
+        action='store_true',
+        help="Enables String Tranformer"
+    )
     
     args = parser.parse_args()
     return args
@@ -113,6 +118,9 @@ def main():
     
     if (args.mba_expression):
         settings.MBAExpression(args.mba_expression_mode)
+        
+    if (args.string_obscure):
+        settings.ObscureString()
         
     if (args.rename):
         settings.Renamer(args.rename_mode)
