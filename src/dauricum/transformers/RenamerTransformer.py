@@ -3,7 +3,8 @@ from dauricum.logger import Logger
 
 class WordGenerator:
     def __init__(self, host):
-        response = urllib3.request(method='GET', url=host)
+        http = urllib3.PoolManager()
+        response = http.request(method='GET', url=host)
         self.words = response.data.splitlines()
     def generate_random_word(self, capitalize = True):
         word = random.choice(self.words)
