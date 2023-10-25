@@ -34,14 +34,8 @@
 
 <h2> 📖: getting started</h2>
 
-<p>you can install dauricum from python</p>
-<pre><code>$ pip install dauricum</code></pre>
-
 <p>you can install dauricum from source</p>
-<pre><code>$ git clone https://github.com/Maxdsdsdsd/dauricum.git && cd dauricum && build.bat</code></pre>
-
-<p>run obfuscation with args</p>
-<pre><code>$ py -m dauricum -h</code></pre>
+<pre><code>$ git clone https://github.com/Maxdsdsdsd/dauricum.git && cd dauricum</code></pre>
 
 <h2> 🪧: examples</h2>
 
