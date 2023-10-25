@@ -38,7 +38,7 @@
 <pre><code>$ git clone https://github.com/Maxdsdsdsd/dauricum.git && cd dauricum</code></pre>
 
 <p>obfuscate file (you need to configure it)</p>
-<pre><code>$ obfuscate-file.py</code></pre>
+<pre><code>$ python3 obfuscate-file.py</code></pre>
 
 <h2> 🪧: examples</h2>
 
