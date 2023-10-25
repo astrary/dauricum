@@ -1,58 +1,58 @@
 <h1 align="center">dauricum</h1>
+<div align="center">
 
-![Commits](https://img.shields.io/github/commit-activity/m/Maxdsdsdsd/dauricum)
-![Stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/dauricum)
+![GitHub Repo stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
+![GitHub forks](https://img.shields.io/github/forks/Maxdsdsdsd/dauricum)
+![GitHub issues](https://img.shields.io/github/issues/Maxdsdsdsd/dauricum)
+![GitHub](https://img.shields.io/github/license/Maxdsdsdsd/dauricum)
 
-*A work-in-progress Python 3.10+ obfuscator with many obfuscation methods.*
- 
- This obfuscator is built on ast. Inspired by [jargonaut](https://github.com/mad-cat-lon/jargonaut/tree/master).
- 
- Note that this is a proof-of-concept and a work in progress.
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Rhododendron_dauricum_Dahurianalppiruusu_IM7354_C.JPG" width="630" height="420">
+</div>
 
-## Features
- * MBA Expressions
- * In Outline
- * Control Flow
- * Try Catch
- * Try Catch Normalizer
- * Opaque
- * Renamer (Classes, fields, functions)
- * String Obscure
+<h2> 📝: about the project</h2>
 
-## Examples
-Check out examples folder
+<p align="justify"> 
+  python 3.10+ obfuscator.
+</p>
 
-## How to
-### Installation
+<h2> 💾: features</h2>
 
-Install with pip
+<ul>
+  <li><b>call transformer</b> - hides the name of the called function</li>
+  <li><b>control flow transformer</b> - makes flow very difficult to understand</li>
+  <li><b>exception jump transformer</b> - throws an exception with the value and catch it as instruction number</li>
+  <li><b>format transformer</b> - convert string format to format() method call</li>
+  <li><b>function transformer</b> - hides function args</li>
+  <li><b>import transformer</b> - makes imports difficult to understand</li>
+  <li><b>number transformer</b> - makes numbers and lists of numbers difficult to understand</li>
+  <li><b>outline transformer</b> - passes a function call into lambda to make it more difficult to understand</li>
+  <li><b>renamer transformer</b> - renames variables and function names.</li>
+  <li><b>string transformer</b> - makes strings difficult to understand</li>
+</ul>
+<ul align="center">bytecode transformer and more soon</ul>
 
-```bash
-  pip install dauricum
-```
+<h2> 📖: getting started</h2>
 
-Install from github
+<p>you can install dauricum from python</p>
+<pre><code>$ pip install dauricum</code></pre>
 
-```bash
-  git clone https://github.com/Maxdsdsdsd/dauricum.git
-  cd dauricum
-  
-  build.bat
-```
+<p>you can install dauricum from source</p>
+<pre><code>$ git clone https://github.com/Maxdsdsdsd/dauricum.git && cd dauricum && build.bat</code></pre>
 
-### Use
+<p>run obfuscation with args</p>
+<pre><code>$ py -m dauricum -h</code></pre>
 
-Obfuscate .py file
+<h2> 🪧: examples</h2>
 
-```bash
-  py -m dauricum -input example1-unobf.py -output example1-obf-0.4.py --mba-expression
-  --mba-expression-mode true --in-outline --control-flow --try-catch --try-catch-mode true
-  --try-catch-iter 3 --try-normalizer --try-normalizer-iter 5 --rename --rename-mode 3
-  --opaque --opaque-iter 5 --string-obscure
-```
+<p>you can check out them at examples folder</p>
 
-Get help
+</p>
 
-```bash
-  py -m dauricum --help
-```
+<h2> 📊: control flow graph</h2>
+<p>before:</p>
+
+![изображение](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/06e7970c-1d16-4ed6-9db1-b6bd4b547c3f)
+<p>after:</p>
+
+![изображение](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/668c6491-38aa-440c-9e59-e18f54228441)
