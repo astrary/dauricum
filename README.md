@@ -13,7 +13,7 @@
 <h2> 📝: about the project</h2>
 
 <p align="justify"> 
-  python 3.10+ obfuscator.
+  python 3.10+ obfuscator. no more on pypi.
 </p>
 
 <h2> 💾: features</h2>
