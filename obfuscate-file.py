@@ -1,11 +1,14 @@
-import dauricum
+try:
+    import dauricum
+except ModuleNotFoundError:
+    print("\n\n!!! move me to src folder !!!\n\n")
 
 def run():
     settings = dauricum.ObfuscatorSettings()
     alphabet = "_liI"
     length = 16
     
-    input, output = open("examples/example-unobfuscated.py", "r", encoding="utf-8"), open("examples/example-obfuscated.py", "w", encoding="utf-8")
+    input, output = open("dauricum/examples/example-unobfuscated.py", "r", encoding="utf-8"), open("dauricum/examples/example-obfuscated.py", "w", encoding="utf-8")
     
     settings.import_transformer()
     settings.format_transformer()
