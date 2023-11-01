@@ -43,6 +43,8 @@ class MutatorUtils:
         key_index = random.randint(0xFF, 0xFFFFFFF)
         node.value.value = elts[1] ^ key_index
         
+        name_obj = node.targets[0]
+        
         body = []
         for key in keys:
             body.append(ast.Assign(
@@ -52,14 +54,14 @@ class MutatorUtils:
                         slice=ast.BinOp(
                             left=ast.Constant(value=key_index),
                             op=ast.BitXor(),
-                            right=ast.Name(id=node.targets[0].id)))],
+                            right=name_obj))],
                 value=ast.BinOp(
                     left=ast.Subscript(
                         value=ast.Name(id=name),
                         slice=ast.BinOp(
                             left=ast.Constant(value=key_index),
                             op=ast.BitXor(),
-                            right=ast.Name(id=node.targets[0].id))),
+                            right=name_obj)),
                     op=ast.BitXor(),
                     right=ast.UnaryOp(
                         op=ast.Invert(),
@@ -74,7 +76,7 @@ class MutatorUtils:
                 slice=ast.BinOp(
                     left=ast.Constant(value=key_index),
                     op=ast.BitXor(),
-                    right=ast.Name(id=node.targets[0].id))),
+                    right=name_obj)),
                     lineno=None
             )
         )
