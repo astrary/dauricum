@@ -22,39 +22,40 @@ class ImportTransformer(Transformer):
     
     class ImportTransformer(ast.NodeTransformer):
         
-        def visit_ImportFrom(self, node: ast.ImportFrom):
-            ret = []
-            module_name = node.module
+        # very bad
+        # def visit_ImportFrom(self, node: ast.ImportFrom):
+        #     ret = []
+        #     module_name = node.module
             
-            for alias in node.names:
-                name = alias.name
-                asname = alias.asname
+        #     for alias in node.names:
+        #         name = alias.name
+        #         asname = alias.asname
                 
-                if asname == None: asname = name
+        #         if asname == None: asname = name
                 
-                if name == '*': 
-                    return node
+        #         if name == '*': 
+        #             return node
                 
-                ret.append(ast.Assign(
-                    targets=[
-                        ast.Name(id=name)],
-                        value=ast.Call(
-                            func=ast.Name(id='getattr'),
-                            args=[
-                                ast.Call(
-                                    func=ast.Name(id='__import__'),
-                                    args=[],
-                                    keywords=[
-                                        ast.keyword(
-                                            arg='name',
-                                            value=ast.Constant(s=module_name)),
-                                        ast.keyword(
-                                            arg='fromlist',
-                                            value=ast.Constant(s=name))]),
-                                ast.Constant(s=name)],
-                            keywords=[]), lineno=None))
+        #         ret.append(ast.Assign(
+        #             targets=[
+        #                 ast.Name(id=name)],
+        #                 value=ast.Call(
+        #                     func=ast.Name(id='getattr'),
+        #                     args=[
+        #                         ast.Call(
+        #                             func=ast.Name(id='__import__'),
+        #                             args=[],
+        #                             keywords=[
+        #                                 ast.keyword(
+        #                                     arg='name',
+        #                                     value=ast.Constant(s=module_name + "." + name)),
+        #                                 ast.keyword(
+        #                                     arg='fromlist',
+        #                                     value=ast.Constant(s=name))]),
+        #                         ast.Constant(s=name)],
+        #                     keywords=[]), lineno=None))
             
-            return ret
+        #     return ret
         
         def visit_Import(self, node: ast.Import):
             ret = []
@@ -73,14 +74,7 @@ class ImportTransformer(Transformer):
                         func=ast.Name(id='__import__'),
                         args=[
                             ast.Constant(value=name)],
-                        keywords=[ast.keyword(
-                            arg='fromlist',
-                            value=ast.List(
-                                elts=[
-                                    ast.Constant(value=None)
-                                ]
-                            )
-                        )]
+                        keywords=[]
                     ),
                     lineno=None
                 ))

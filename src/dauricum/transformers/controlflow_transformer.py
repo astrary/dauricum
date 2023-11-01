@@ -12,10 +12,10 @@ class ControlFlowUtils:
         cases = []
         
         for i in range(random.randint(0, 3)):
-            num = random.randint(0xFFFFF, 0xFFFFFFFFFFFF)
+            num = random.randint(1, max)
             
-            while (num in maps or num > max):
-                num = random.randint(0xFFFFF, 0xFFFFFFFFFFFF)
+            while (num in maps):
+                num = random.randint(1, max)
             
             case_name = Utils.randomize_name(ControlFlowUtils.alphabet, ControlFlowUtils.length)
             case = ast.match_case(
@@ -32,8 +32,24 @@ class ControlFlowUtils:
                     )
                 ]
             )
-            if (len(node.body) > 1):
-                case.body.append(random.choice(node.body))
+            
+            fixed_body = node.body
+            
+            if (len(fixed_body) > 1):
+                choice = random.choice(fixed_body)
+                
+                if isinstance(choice, ast.Global):
+                    choice = ast.Pass
+                elif isinstance(choice, list):
+                    choice = ast.Pass
+                for body_child in ast.walk(choice):
+                    for body_child_child in ast.iter_child_nodes(body_child):
+                        if isinstance(body_child_child, ast.Global):
+                            body_child_child = ast.Pass
+                            body_child = ast.Pass
+                            choice = ast.Pass
+                
+                case.body.append(choice)
             
             cases.append(case)
         return cases
@@ -41,9 +57,10 @@ class ControlFlowUtils:
     def generate_controlflow_block(node):
         old_body = node.body
             
-        current = Utils.generate_next_num(0, 0xFFFFFFF)
-        next_num = Utils.generate_next_num(current, 0xFFFFFFFFFFFF)
+        current = Utils.generate_next_num(0, 0xFFFF)
+        next_num = Utils.generate_next_num(current, 0xFFFFFFFFFFFFFF)
         maps = []
+        global_list = []
         
         turn_name = Utils.randomize_name(ControlFlowUtils.alphabet, ControlFlowUtils.length)
         base = [
@@ -58,7 +75,7 @@ class ControlFlowUtils:
                     ops=[
                         ast.Lt()],
                     comparators=[
-                        ast.Constant(value=0xFFFFFFFFFFFF + 1)]),
+                        ast.Constant(value=0xFFFFFFFFFFFFFF + 1)]),
                 body=[
                     
                 ],
@@ -70,7 +87,12 @@ class ControlFlowUtils:
             subject=ast.Name(id=turn_name),
             cases=[]
         )
+        
         for body_node in old_body:
+            if isinstance(body_node, ast.Global):
+                global_list.append(body_node)
+                continue
+            
             new = ast.match_case(
                 pattern=ast.MatchValue(
                     value=ast.Constant(value=current)
@@ -94,7 +116,7 @@ class ControlFlowUtils:
             
             maps.append(next_num)
             current = next_num
-            next_num = Utils.generate_next_num(current, 0xFFFFFFFFFFFFFF)
+            next_num = Utils.generate_next_num(current, 0xFFFFFFFFFFFFFFFF)
         base[1].test.comparators[0].value = next_num
         
         new_base.cases[len(new_base.cases) - 1].body.append(ast.Break())
@@ -106,6 +128,8 @@ class ControlFlowUtils:
         base[1].body.append(
             new_base
         )
+        for global_def in global_list:
+            base.insert(0, global_def)
         
         node.body = base
     def generate_methods_clone(tree, node: ast.FunctionDef):
@@ -158,7 +182,7 @@ class ControlFlowTransformer(Transformer):
                 child.parent = node
         
         flow = ControlFlowTransformer.ControlFlowTransformer()
-        for i in range(random.randint(1, self.ladder)):
+        for i in range(self.ladder):
             self.tree = flow.visit(self.tree)
         flow = ControlFlowTransformer.ControlFlowPostTransformer(self.tree, self.safe_mode)
         self.tree = flow.visit(self.tree)

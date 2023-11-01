@@ -35,7 +35,7 @@ class OutlineTransformer(Transformer):
             node_value = node.value
             
             if isinstance(node.value.func, ast.Attribute):
-                if isinstance(node.value.func.value, ast.Call) and node.value.func.value.func.id == "super":
+                if isinstance(node.value.func.value, ast.Call) and not isinstance(node.value.func.value.func, ast.Attribute) and node.value.func.value.func.id == "super":
                     return node
             
             name = ast.Name(id=Utils.randomize_name(self.alphabet, self.length))

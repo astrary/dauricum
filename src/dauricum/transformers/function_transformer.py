@@ -34,6 +34,7 @@ class FunctionTransformer(Transformer):
         def visit_FunctionDef(self, node: ast.FunctionDef):
             if node.name.startswith("__"): return node
             if len(node.args.args) == 0: return node
+            if node.args.vararg != None or node.args.kwarg != None or node.args.defaults != []: return node
             
             args_name = Utils.randomize_name(self.alphabet, self.length)
             node.args.vararg = ast.arg(arg=args_name)
