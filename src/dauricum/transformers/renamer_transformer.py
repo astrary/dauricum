@@ -29,9 +29,29 @@ class Utils:
                             if (target.id == name):
                                 return target.id
                 elif (isinstance(child, ast.For)):
-                    if (child.target.id == Utils.randomize_name(orig_name, StaticValues.alphabet, StaticValues.length)):
-                        return child.target.id
+                    if isinstance(child.target, ast.Tuple):
+                        for elt in child.target.elts:
+                            if isinstance(elt, ast.Name):
+                                if (elt.id == Utils.randomize_name(orig_name, StaticValues.alphabet, StaticValues.length)):
+                                    return elt.id
+                    else:
+                        if (child.target.id == Utils.randomize_name(orig_name, StaticValues.alphabet, StaticValues.length)):
+                            return child.target.id
         return None
+    
+    def is_name_imported(tree: ast.Module, name: str):
+        for node in ast.walk(tree):
+            for child in ast.iter_child_nodes(node):
+                if (isinstance(child, ast.ImportFrom)):
+                    if child.module == name:
+                        return True
+                        
+                    for name_a in child.names:
+                        if name_a.name == name:
+                            return True
+                if (isinstance(child, ast.ImportFrom)):
+                    pass
+        return False
     
     def find_parent(node, target):
         parent = node
@@ -112,6 +132,8 @@ class RenamerTransformer(Transformer):
                 return node
             
             if is_class_parent:
+                if (not isinstance(node.func.value, ast.Call) or not isinstance(node.func.value.func, ast.Name)):
+                    return node
                 if isinstance(node.func.value, ast.Call) and node.func.value.func.id in self.bad_names:
                     return node
                 
@@ -170,6 +192,11 @@ class RenamerTransformer(Transformer):
                 if (not isinstance(node.parent, ast.Attribute)):
                     new_value = Utils.randomize_name(node.id, StaticValues.alphabet, StaticValues.length)
                     
+                    # if Utils.find_parent(node, ast.withitem):
+                    #     return node
+                    if Utils.is_name_imported(self.tree, node.id):
+                        return node
+                    
                     self.mappings.update({node.id: new_value})
                     node.id = new_value
                 else:
@@ -181,4 +208,29 @@ class RenamerTransformer(Transformer):
                         if (found_node_name != None):
                             node.id = found_node_name
             
+            return node
+        def visit_withitem(self, node: ast.withitem):
+            
+            if isinstance(node.context_expr, ast.Call):
+                for arg in node.context_expr.args:
+                    if isinstance(arg, ast.Name):
+                        arg.id = Utils.randomize_name(arg.id, StaticValues.alphabet, StaticValues.length)
+            
+            
+                if node.optional_vars != None:
+                    for body in node.parent.body:
+                        for body_node in ast.walk(body):
+                            for child in ast.iter_child_nodes(body_node):
+                                if isinstance(child, ast.Attribute):
+                                    #print(ast.dump(child) + " 1")
+                                    if node.optional_vars.id == child.value.id:
+                                        child.value.id = Utils.randomize_name(child.value.id, StaticValues.alphabet, StaticValues.length)
+                                    
+                                # if isinstance(body_node, ast.Attribute):
+                                #     if node.optional_vars.id == body_node.value.id:
+                                #         print('got2 ' + body_node.value.id)
+                    
+                    #self.mappings.update({node.optional_vars.id: Utils.randomize_name(node.optional_vars.id, StaticValues.alphabet, StaticValues.length)})
+                    node.optional_vars.id = Utils.randomize_name(node.optional_vars.id, StaticValues.alphabet, StaticValues.length)
+                
             return node

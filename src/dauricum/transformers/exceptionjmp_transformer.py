@@ -160,8 +160,14 @@ class ExceptionJumpUtils:
                 finalbody=[])],
         orelse=[])
         
+        globals_list = []
+        
         line = 1
         for body_node in old_body:
+            if isinstance(body_node, ast.Global):
+                globals_list.append(body_node)
+                continue
+            
             case.body[1].handlers[0].body.append(
                 ast.If(
                     test=ast.Compare(
@@ -184,6 +190,9 @@ class ExceptionJumpUtils:
         random.shuffle(case.body[1].handlers[0].body)
         
         node.body.append(case)
+        
+        for global_obj in globals_list:
+            node.body.insert(0, global_obj)
         
         return node
 
