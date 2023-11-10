@@ -85,13 +85,23 @@ class FormatTransformer(Transformer):
             
             fmt_string = FormatHelper.convert_pinterpolation(node.left.value)
             
-            node = ast.Call(
-                func=ast.Attribute(
-                    value=ast.Constant(value=fmt_string),
-                    attr='format'
-                ),
-                args=node.right.elts,
-                keywords=[]
-            )
+            if isinstance(node.right, ast.Tuple):
+                node = ast.Call(
+                    func=ast.Attribute(
+                        value=ast.Constant(value=fmt_string),
+                        attr='format'
+                    ),
+                    args=node.right.elts,
+                    keywords=[]
+                )
+            else:
+                node = ast.Call(
+                        func=ast.Attribute(
+                            value=ast.Constant(value=fmt_string),
+                            attr='format'
+                        ),
+                        args=[node.right],
+                        keywords=[]
+                    )
             
             return node

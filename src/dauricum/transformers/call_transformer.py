@@ -11,7 +11,7 @@ class CallUtils:
         random.shuffle(objs)
         
         for obj in objs:
-            if letter in obj and hasattr(getattr(builtins, obj), '__name__') and getattr(builtins, obj).__name__ == obj:
+            if letter in obj and hasattr(getattr(builtins, obj), '__name__') and getattr(builtins, obj).__name__ == obj and ('exception' in obj.lower() or 'error' in obj.lower() or '__' in obj.lower()):
                 return [obj, obj.find(letter)]
             
         Logger.logger.debug(f"for letter '{letter}' not found any candidate!")
