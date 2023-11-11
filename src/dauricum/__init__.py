@@ -6,7 +6,7 @@ python 3.10+ obfuscator.
 
 """
 
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = 'nighty1337'
 
 import io
