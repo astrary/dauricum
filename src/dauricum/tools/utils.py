@@ -8,10 +8,10 @@ class Utils:
         
         return name
     def generate_next_num(current: int, max: int):
-        next = random.randint(0xFFFFF, max)
+        next = current + random.randint(1, 1000)
         
-        while next <= current or next > max:
-            next = random.randint(0xFFFFF, max)
+        while next > max:
+            print('BAD CONTROL FLOW BLOCK NUMBER')
         return next
     def find_parent(node, targets):
         parent = node.parent
