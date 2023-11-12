@@ -13,7 +13,7 @@ def run():
     settings.import_transformer()
     settings.format_transformer()
     settings.outline_transformer(alphabet, length)
-    settings.renamer_transformer(alphabet, length)
+    # settings.renamer_transformer(alphabet, length) # do not use it
     settings.number_transformer(7, True, alphabet, length)
     settings.biopaque_transformer()
     settings.controlflow_transformer(5, alphabet, length, False)
