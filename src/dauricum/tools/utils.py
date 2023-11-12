@@ -36,3 +36,5 @@ class Utils:
                     if child.name == name:
                         return child
         return None
+    def get_chance():
+        return random.randint(0, 100)
