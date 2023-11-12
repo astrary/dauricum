@@ -29,6 +29,7 @@
   <li><b>outline transformer</b> - passes a function call into lambda to make it more difficult to understand</li>
   <li><b>renamer transformer</b> - renames variables and function names. (very bad, do not use it in large files)</li>
   <li><b>string transformer</b> - makes strings difficult to understand</li>
+  <li><b>bi-opaque transformer</b> - transforms simple logical expression into complex one</li>
 </ul>
 <ul align="center">bytecode transformer and more soon</ul>
 
