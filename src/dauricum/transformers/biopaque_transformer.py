@@ -195,6 +195,7 @@ class BiOpaqueTransformer(Transformer):
             
             for i in range(body_length):
                 child = body[i]
+                if isinstance(child, list): continue
                 
                 if chance <= 0 or chance >= 100: break
                 
