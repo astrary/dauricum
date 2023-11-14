@@ -1,7 +1,7 @@
 <h1 align="center">dauricum</h1>
 <div align="center">
 
-![PyPI - Downloads](https://img.shields.io/pypi/dm/dauricum)
+![Codefactor](https://www.codefactor.io/repository/github/maxdsdsdsd/dauricum)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
 ![GitHub forks](https://img.shields.io/github/forks/Maxdsdsdsd/dauricum)
 ![GitHub issues](https://img.shields.io/github/issues/Maxdsdsdsd/dauricum)
@@ -50,7 +50,7 @@
 <h2> 📊: control flow graph</h2>
 <p>before:</p>
 
-![изображение](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/06e7970c-1d16-4ed6-9db1-b6bd4b547c3f)
+![cfg](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/06e7970c-1d16-4ed6-9db1-b6bd4b547c3f)
 <p>after:</p>
 
-![изображение](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/668c6491-38aa-440c-9e59-e18f54228441)
+![cfg](https://github.com/Maxdsdsdsd/dauricum/assets/33353036/668c6491-38aa-440c-9e59-e18f54228441)
