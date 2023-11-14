@@ -1,7 +1,7 @@
 <h1 align="center">dauricum</h1>
 <div align="center">
 
-![Codefactor](https://www.codefactor.io/repository/github/maxdsdsdsd/dauricum)
+![Codefactor](https://www.codefactor.io/repository/github/maxdsdsdsd/dauricum/badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Maxdsdsdsd/dauricum)
 ![GitHub forks](https://img.shields.io/github/forks/Maxdsdsdsd/dauricum)
 ![GitHub issues](https://img.shields.io/github/issues/Maxdsdsdsd/dauricum)
