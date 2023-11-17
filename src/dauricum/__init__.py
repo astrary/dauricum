@@ -61,8 +61,8 @@ class ObfuscatorSettings:
     def call_transformer(self):
         self.add_transformer(CallTransformer())
 
-    def biopaque_transformer(self):
-        self.add_transformer(BiOpaqueTransformer())
+    def biopaque_transformer(self, alphabet: str, length: int, safe_mode: bool):
+        self.add_transformer(BiOpaqueTransformer(alphabet, length, safe_mode))
 
     def function_transformer(self, alphabet: str, length: int):
         self.add_transformer(FunctionTransformer(alphabet, length))
