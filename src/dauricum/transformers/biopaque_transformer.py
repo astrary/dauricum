@@ -7,6 +7,9 @@ from dauricum.tools.logger import Logger
 class BiOpaqueUtils:
     possible_args = []
     possible_functions = []
+    alphabet = "abcde01234"
+    length = 16
+    safe_mode = False
     
     def get_possible_functions(tree: ast.Module):
         if BiOpaqueUtils.possible_functions != []: return BiOpaqueUtils.possible_functions
@@ -96,7 +99,7 @@ class BiOpaqueUtils:
                 roadline.append([ast.Add(), val])
         return (num, roadline)
     
-    def obscure_bool(value: bool):
+    def obscure_bool(value: bool, arg_name: str):
         roadline = BiOpaqueUtils.generate_roadline(value)
         
         while len(roadline[1]) > 6:
@@ -104,7 +107,9 @@ class BiOpaqueUtils:
         
         original_number = roadline[0]
         roadline = roadline[1]
-        binop = ast.Name(id='x')
+        
+        binop_name = Utils.randomize_name(BiOpaqueUtils.alphabet, BiOpaqueUtils.length)
+        binop = ast.Name(id=binop_name)
         
         for action in roadline:
             key = random.randint(1, 6996)
@@ -127,23 +132,41 @@ class BiOpaqueUtils:
                     keywords=[]
                 )
             )
-        return ast.Call(
+        
+        if BiOpaqueUtils.safe_mode:
+            return (ast.Call(
+                func=ast.Lambda(
+                    args=ast.arguments(
+                        posonlyargs=[],
+                        args=[ast.arg(arg=binop_name)],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=binop
+                ),
+                args=[ast.Constant(value=original_number)],
+                keywords=[]
+            ), None)
+        
+        return (ast.Call(
             func=ast.Lambda(
                 args=ast.arguments(
                     posonlyargs=[],
-                    args=[ast.arg(arg='x')],
+                    args=[ast.arg(arg=binop_name)],
                     kwonlyargs=[],
                     kw_defaults=[],
                     defaults=[]),
                 body=binop
             ),
-            args=[ast.Constant(value=original_number)],
+            args=[ast.Name(id=arg_name)],
             keywords=[]
-        )
+        ), original_number)
     
-    def generate_opaquepredicate(tree, node):
+    def generate_opaquepredicate(tree, node, arg_name: str):
+        test = BiOpaqueUtils.obscure_bool(True, arg_name)
+        
         ret_node = ast.If(
-            test=BiOpaqueUtils.obscure_bool(True),
+            test=test[0],
             body=[
                 node
             ],
@@ -153,12 +176,32 @@ class BiOpaqueUtils:
         )
         
         if Utils.get_chance() > 50:
+            test = BiOpaqueUtils.obscure_bool(False, arg_name)
+            
             ret_node.body, ret_node.orelse = ret_node.orelse, ret_node.body
-            ret_node.test = BiOpaqueUtils.obscure_bool(False)
+            ret_node.test = test[0]
         
-        return ret_node
+        return (ret_node, test[1])
+    
+    def fix_calls(tree, func_name: str, arg_name: str, value: int):
+        for node in ast.walk(tree):
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, ast.Call):
+                    if isinstance(child.func, ast.Lambda):
+                        continue
+                    elif isinstance(child.func, ast.Name):
+                        if child.func.id == func_name:
+                            child.args.append(ast.Constant(value=value))
+                    elif isinstance(child.func, ast.Attribute):
+                        if child.func.attr == func_name:
+                            child.args.append(ast.Constant(value=value))
 
 class BiOpaqueTransformer(Transformer):
+    
+    def __init__(self, alphabet: str, length: int, safe_mode: bool):
+        BiOpaqueUtils.alphabet = alphabet
+        BiOpaqueUtils.length = length
+        BiOpaqueUtils.safe_mode = safe_mode
         
     def proceed(self, tree: ast.Module):
         Logger.logger.name = __class__.__name__
@@ -182,6 +225,8 @@ class BiOpaqueTransformer(Transformer):
         
         def visit_FunctionDef(self, node: ast.FunctionDef):
             if isinstance(node, list): return node
+            if node.args.vararg != None or node.args.kwarg != None: return node
+            if node.name.startswith("__"): return node
             Logger.logger.debug("proceeding biopaque function: " + node.name)
             
             body = node.body
@@ -189,7 +234,7 @@ class BiOpaqueTransformer(Transformer):
             bad_list = [ast.Global, ast.If, ast.For, ast.Return, ast.Pass, ast.Try, ast.ExceptHandler]
             
             chance = 75
-            chance_step = int(25 / (body_length))
+            chance_step = int(50 / (body_length))
             
             if body_length == 1: return node
             
@@ -200,7 +245,15 @@ class BiOpaqueTransformer(Transformer):
                 if chance <= 0 or chance >= 100: break
                 
                 if (Utils.get_chance() > chance and not type(child) in bad_list):
-                    body[i] = BiOpaqueUtils.generate_opaquepredicate(self.tree, child)
+                    arg_name = Utils.randomize_name(BiOpaqueUtils.alphabet, BiOpaqueUtils.length)
+                    predicate = BiOpaqueUtils.generate_opaquepredicate(self.tree, child, arg_name)
+                    
+                    if not BiOpaqueUtils.safe_mode:
+                        node.args.args.append(ast.arg(arg=arg_name))
+                        BiOpaqueUtils.fix_calls(self.tree, node.name, arg_name, predicate[1])
+                    
+                    body[i] = predicate[0]
+            
                     chance += chance_step
             
             return node
