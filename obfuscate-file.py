@@ -16,7 +16,6 @@ def run():
     # settings.renamer_transformer(alphabet, length) # do not use it
     settings.number_transformer(7, True, alphabet, length)
     settings.biopaque_transformer(alphabet, length, False) # use safe mode if you using threadings
-    settings.biopaque_transformer()
     settings.controlflow_transformer(5, alphabet, length, False)
     settings.exceptionjmp_transformer(alphabet, length)
     settings.string_transformer(alphabet, length)
