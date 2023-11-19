@@ -10,10 +10,11 @@ def run():
     
     input, output = open("dauricum/examples/example-unobfuscated.py", "r", encoding="utf-8"), open("dauricum/examples/example-obfuscated.py", "w", encoding="utf-8")
     
+    settings.renamer_transformer(alphabet, length) # remove this line if you encounter issues
+    
     settings.import_transformer()
     settings.format_transformer()
     settings.outline_transformer(alphabet, length)
-    # settings.renamer_transformer(alphabet, length) # do not use it
     settings.number_transformer(7, True, alphabet, length)
     settings.biopaque_transformer(alphabet, length, False) # use safe mode if you using threadings or if you use outline transformer
     settings.controlflow_transformer(5, alphabet, length, False)
