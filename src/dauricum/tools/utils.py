@@ -6,12 +6,14 @@ class Utils:
         while name[0].isdigit():
             name = ''.join([random.choice(alphabet) for _ in range(length)])
         
+        # name = name[:len(name) // 2] + '__dauricum__' + name[len(name) // 2:] watermark
+        
         return name
     def generate_next_num(current: int, max: int):
         next = current + random.randint(1, 1000)
         
-        while next > max:
-            print('BAD CONTROL FLOW BLOCK NUMBER')
+        if next > max:
+            raise EOFError('BAD CONTROL FLOW BLOCK NUMBER (report this issue on github)')
         return next
     def find_parent(node, targets):
         parent = node.parent
